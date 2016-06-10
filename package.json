@@ -1,0 +1,14 @@
+{
+  "name": "pholcus",
+  "version": "1.0.0",
+  "description": "dev laboratory portfolio",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jeff Wilcox",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^1.13.0"
+  }
+}
