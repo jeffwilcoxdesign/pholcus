@@ -48,6 +48,12 @@
 	var PhysicsParticle = __webpack_require__(5);
 	var Vector2 = __webpack_require__(6);
 
+	//var createjs = require("../../../node_modules/createjs-combined/createjs-2015.11.26.min");
+	//var createjsInst = require("../../../node_modules/createjs-combined/createjs-2015.11.26.min");
+
+	//import createjs from 'createjs-combined';
+	//import React from 'react';
+
 	function init() {
 		// CANVAS SETUP
 		document.body.appendChild(canvas); 
@@ -58,12 +64,52 @@
 		var preload = new createjs.LoadQueue();
 		preload.addEventListener("fileload", handleFileComplete);
 		preload.addEventListener("progress", handleProgress);
-		preload.loadFile("img/2016_03_14_Checkout_Flow_Vis_D-Desktop_RD5.png");
+		preload.loadFile("img/2016_03_14_Checkout_Flow_Vis_D-Desktop_RD5.png");// simulate content download
+		
+		// start loading animation framework here?
+		// need to configure webpack to bundle a secondary js file for site assets above...
+		
 	}
+
 	document.addEventListener('DOMContentLoaded', init);
 
 	function handleFileComplete(event) {
-	  console.log('cheers!');
+	  //console.log('cheers!');
+	  // animate here?
+	  /*
+	  TweenMax.to(canvas, .4, 
+	  	{
+	  		width:(window.innerWidth*2), 
+	  		height:(window.innerHeight*2), 
+	  		x:(window.innerWidth/-2), 
+	  		y:(window.innerHeight/-2)
+	  	});
+		*/
+
+		// need to animate elements within particles array here
+		particles.forEach(function(el){
+			console.log(el);
+			console.log(el.pos);
+
+			// need to also tween pos.x and pos.y properties on el...
+			//el.drag = 0.7;
+			el.force.reset(0,0);
+			el.pos.reset((window.innerWidth*Math.random()), (window.innerHeight*Math.random()))
+	//particle.vel.reset(1,0);
+			// make TweenMax call a function particle.pos.reset() for each step of animaiton...
+			TweenMax.to(el, 1.6, 
+		  	{
+		  		radius: 50,
+		  		//particle.pos.reset(HALF_WIDTH, HALF_HEIGHT)
+		  		
+
+		  		//pos: new Vector2(window.innerWidth*Math.random(), window.innerHeight*Math.random())
+		  		//pos: {x:(window.innerWidth*Math.random()), y:(window.innerHeight*Math.random())} 
+		  		//pos.x: (window.innerWidth*Math.random()), 
+	  			//pos.y: (window.innerHeight*Math.random())
+		  	});
+		});
+
 	}
 	function handleProgress(event) {
 		console.log('img load progress.. '+Math.round(event.progress*100));
@@ -97,7 +143,7 @@
 			var p1 = particles[i]; 
 			
 			repelforce.copyFrom(p1.pos);
-				repelforce.x-=HALF_WIDTH; 
+			repelforce.x-=HALF_WIDTH; 
 			repelforce.y-=HALF_HEIGHT; 
 			// 				
 			mag = repelforce.magnitude(); 
@@ -122,8 +168,7 @@
 					repelforce.multiplyEq(repelstrength*0.025); 
 				
 					p1.force.minusEq(repelforce); 
-					p2.force.plusEq(repelforce); 
-
+					p2.force.plusEq(repelforce);
 				}
 			}	
 		}
@@ -164,6 +209,7 @@
 			particle.pos.reset(HALF_WIDTH, HALF_HEIGHT); 
 			particle.vel.reset(1,0);
 			particle.vel.rotate(Math.random()*360);
+			//particle.drag = 0.98;
 			particle.drag = 0.96;
 				
 			// add it to the array
@@ -172,7 +218,6 @@
 		}
 	}
 
-	alert('main.js file loaded');
 
 /***/ },
 /* 1 */
@@ -209,7 +254,7 @@
 
 
 	// module
-	exports.push([module.id, "body {\n\tbackground-color: orange;\n}", ""]);
+	exports.push([module.id, "body {\n\tmargin: 0;\n    padding: 0;\n}", ""]);
 
 	// exports
 
@@ -526,7 +571,7 @@
 /* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Vector2 = __webpack_require__(6);// import Vector2.js a second time?
+	var Vector2 = __webpack_require__(6);
 
 	function PhysicsParticle(posx, posy)
 	{

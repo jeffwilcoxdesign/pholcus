@@ -2,6 +2,12 @@ require("../../css/preloader/style.css");
 var PhysicsParticle = require("./PhysicsParticle");
 var Vector2 = require("./Vector2");
 
+//var createjs = require("../../../node_modules/createjs-combined/createjs-2015.11.26.min");
+//var createjsInst = require("../../../node_modules/createjs-combined/createjs-2015.11.26.min");
+
+//import createjs from 'createjs-combined';
+//import React from 'react';
+
 function init() {
 	// CANVAS SETUP
 	document.body.appendChild(canvas); 
@@ -24,6 +30,40 @@ document.addEventListener('DOMContentLoaded', init);
 function handleFileComplete(event) {
   //console.log('cheers!');
   // animate here?
+  /*
+  TweenMax.to(canvas, .4, 
+  	{
+  		width:(window.innerWidth*2), 
+  		height:(window.innerHeight*2), 
+  		x:(window.innerWidth/-2), 
+  		y:(window.innerHeight/-2)
+  	});
+	*/
+
+	// need to animate elements within particles array here
+	particles.forEach(function(el){
+		console.log(el);
+		console.log(el.pos);
+
+		// need to also tween pos.x and pos.y properties on el...
+		//el.drag = 0.7;
+		el.force.reset(0,0);
+		el.pos.reset((window.innerWidth*Math.random()), (window.innerHeight*Math.random()))
+//particle.vel.reset(1,0);
+		// make TweenMax call a function particle.pos.reset() for each step of animaiton...
+		TweenMax.to(el, 1.6, 
+	  	{
+	  		radius: 50,
+	  		//particle.pos.reset(HALF_WIDTH, HALF_HEIGHT)
+	  		
+
+	  		//pos: new Vector2(window.innerWidth*Math.random(), window.innerHeight*Math.random())
+	  		//pos: {x:(window.innerWidth*Math.random()), y:(window.innerHeight*Math.random())} 
+	  		//pos.x: (window.innerWidth*Math.random()), 
+  			//pos.y: (window.innerHeight*Math.random())
+	  	});
+	});
+
 }
 function handleProgress(event) {
 	console.log('img load progress.. '+Math.round(event.progress*100));
@@ -57,7 +97,7 @@ function loop() {
 		var p1 = particles[i]; 
 		
 		repelforce.copyFrom(p1.pos);
-			repelforce.x-=HALF_WIDTH; 
+		repelforce.x-=HALF_WIDTH; 
 		repelforce.y-=HALF_HEIGHT; 
 		// 				
 		mag = repelforce.magnitude(); 
@@ -123,6 +163,7 @@ function makeParticle(particleCount) {
 		particle.pos.reset(HALF_WIDTH, HALF_HEIGHT); 
 		particle.vel.reset(1,0);
 		particle.vel.rotate(Math.random()*360);
+		//particle.drag = 0.98;
 		particle.drag = 0.96;
 			
 		// add it to the array
