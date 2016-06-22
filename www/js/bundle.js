@@ -60,7 +60,6 @@
 		preload.addEventListener("progress", handleProgress);
 		preload.loadFile("img/2016_03_14_Checkout_Flow_Vis_D-Desktop_RD5.png");// simulate content download
 		
-		// start loading animation framework here?
 		// need to configure webpack to bundle a secondary js file for site assets above...
 		
 	}
@@ -72,13 +71,14 @@
 		particles.forEach(function(el){
 			
 			// enlarge the jelly dots!
-			TweenMax.to(el, 1.6, 
+			TweenLite.to(el, 1.2, 
 		  	{
 		  		radius: 50,
 		  		onUpdate: function(){
 		  			repelBase = 50+(this.ratio*500);
+		  			// consider having a radius var that is also tweened?
 		  		},
-		  		ease:Linear.easeNone,
+		  		ease:Power1.easeInOut,
 		  	});
 
 		});
@@ -167,8 +167,7 @@
 		}
 		
 		// Keep taking the oldest particles away until we have 
-		// fewer than the maximum allowed. 
-		 
+		// fewer than the maximum allowed.
 		while(particles.length>MAX_PARTICLES)
 			particles.shift(); 
 		
