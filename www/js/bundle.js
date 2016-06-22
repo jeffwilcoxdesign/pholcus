@@ -93,20 +93,25 @@
 
 			// need to also tween pos.x and pos.y properties on el...
 			//el.drag = 0.7;
-			el.force.reset(0,0);
-			el.pos.reset((window.innerWidth*Math.random()), (window.innerHeight*Math.random()))
-	//particle.vel.reset(1,0);
+			
+			//el.force.reset(0,0);
+			//el.pos.reset((window.innerWidth*Math.random()), (window.innerHeight*Math.random()))
+			//el.pos.reset(window.innerWidth, window.innerHeight);
+			var randomNum = Math.random();
+			//particle.vel.reset(1,0);
 			// make TweenMax call a function particle.pos.reset() for each step of animaiton...
 			TweenMax.to(el, 1.6, 
 		  	{
 		  		radius: 50,
+		  		onUpdate: function(val){
+		  			var prog = this.target;
+		  			console.log('onUpdate() val:'+prog);
+		  			console.log(prog);
+
+		  			// this is where we need to update the particle position?
+		  		},
 		  		//particle.pos.reset(HALF_WIDTH, HALF_HEIGHT)
 		  		
-
-		  		//pos: new Vector2(window.innerWidth*Math.random(), window.innerHeight*Math.random())
-		  		//pos: {x:(window.innerWidth*Math.random()), y:(window.innerHeight*Math.random())} 
-		  		//pos.x: (window.innerWidth*Math.random()), 
-	  			//pos.y: (window.innerHeight*Math.random())
 		  	});
 		});
 
@@ -143,13 +148,14 @@
 			var p1 = particles[i]; 
 			
 			repelforce.copyFrom(p1.pos);
-			repelforce.x-=HALF_WIDTH; 
-			repelforce.y-=HALF_HEIGHT; 
-			// 				
-			mag = repelforce.magnitude(); 
-				repelstrength = (mag - 200) *-0.1; 
-				repelforce.divideEq(mag); 
-				repelforce.multiplyEq(repelstrength);
+			repelforce.x-=HALF_WIDTH;
+			repelforce.y-=HALF_HEIGHT;
+			//
+			mag = repelforce.magnitude();
+			repelstrength = (mag - 200) *-0.1;
+			//console.log('repelstrength: '+repelstrength);
+			repelforce.divideEq(mag);
+			repelforce.multiplyEq(repelstrength);
 
 			if(repelstrength<0) 	p1.force.plusEq(repelforce); 
 
@@ -157,17 +163,19 @@
 			{
 				var p2 = particles[j];
 
-				repelforce.copyFrom(p2.pos); 
-				repelforce.minusEq(p1.pos); 
-				mag = repelforce.magnitude(); 
-				repelstrength = 50-mag; 
+				repelforce.copyFrom(p2.pos);
+				repelforce.minusEq(p1.pos);
+				mag = repelforce.magnitude();
+				//repelstrength = 50-mag;
+				repelstrength = 550-mag;// jw edit
+				//console.log('repelstrength: '+repelstrength);// tween these values with the radius?
 				
 				if(repelstrength>0)
 				{
-					repelforce.divideEq(mag); 
-					repelforce.multiplyEq(repelstrength*0.025); 
+					repelforce.divideEq(mag);
+					repelforce.multiplyEq(repelstrength*0.025);
 				
-					p1.force.minusEq(repelforce); 
+					p1.force.minusEq(repelforce);
 					p2.force.plusEq(repelforce);
 				}
 			}	
@@ -210,7 +218,7 @@
 			particle.vel.reset(1,0);
 			particle.vel.rotate(Math.random()*360);
 			//particle.drag = 0.98;
-			particle.drag = 0.96;
+			particle.drag = 0.86;
 				
 			// add it to the array
 			particles.push(particle);
