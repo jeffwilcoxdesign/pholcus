@@ -48,12 +48,6 @@
 	var PhysicsParticle = __webpack_require__(5);
 	var Vector2 = __webpack_require__(6);
 
-	//var createjs = require("../../../node_modules/createjs-combined/createjs-2015.11.26.min");
-	//var createjsInst = require("../../../node_modules/createjs-combined/createjs-2015.11.26.min");
-
-	//import createjs from 'createjs-combined';
-	//import React from 'react';
-
 	function init() {
 		// CANVAS SETUP
 		document.body.appendChild(canvas); 
@@ -74,52 +68,25 @@
 	document.addEventListener('DOMContentLoaded', init);
 
 	function handleFileComplete(event) {
-	  //console.log('cheers!');
-	  // animate here?
-	  /*
-	  TweenMax.to(canvas, .4, 
-	  	{
-	  		width:(window.innerWidth*2), 
-	  		height:(window.innerHeight*2), 
-	  		x:(window.innerWidth/-2), 
-	  		y:(window.innerHeight/-2)
-	  	});
-		*/
-
 		// need to animate elements within particles array here
 		particles.forEach(function(el){
-			console.log(el);
-			console.log(el.pos);
-
-			// need to also tween pos.x and pos.y properties on el...
-			//el.drag = 0.7;
 			
-			//el.force.reset(0,0);
-			//el.pos.reset((window.innerWidth*Math.random()), (window.innerHeight*Math.random()))
-			//el.pos.reset(window.innerWidth, window.innerHeight);
-			var randomNum = Math.random();
-			//particle.vel.reset(1,0);
-			// make TweenMax call a function particle.pos.reset() for each step of animaiton...
+			// enlarge the jelly dots!
 			TweenMax.to(el, 1.6, 
 		  	{
 		  		radius: 50,
-		  		onUpdate: function(val){
-		  			var prog = this.target;
-		  			console.log('onUpdate() val:'+prog);
-		  			console.log(prog);
-
-		  			// this is where we need to update the particle position?
+		  		onUpdate: function(){
+		  			repelBase = 50+(this.ratio*500);
 		  		},
-		  		//particle.pos.reset(HALF_WIDTH, HALF_HEIGHT)
-		  		
+		  		ease:Linear.easeNone,
 		  	});
+
 		});
 
 	}
 	function handleProgress(event) {
 		console.log('img load progress.. '+Math.round(event.progress*100));
 		var prcnt = Math.round(event.progress*20);
-		//console.log('now adding some circles... '+Math.round(prcnt - particles.length));
 		makeParticle(Math.round(prcnt - particles.length));
 	}
 
@@ -134,11 +101,12 @@
 	context = canvas.getContext( '2d' ),
 
 	particles = [],
-	MAX_PARTICLES = 100;
+	MAX_PARTICLES = 100,
+	repelBase = 50;
 
 
 	function loop() {
-		
+
 		var repelforce = new Vector2(0,0),
 			mag, 
 			repelstrength; 
@@ -166,10 +134,8 @@
 				repelforce.copyFrom(p2.pos);
 				repelforce.minusEq(p1.pos);
 				mag = repelforce.magnitude();
-				//repelstrength = 50-mag;
-				repelstrength = 550-mag;// jw edit
-				//console.log('repelstrength: '+repelstrength);// tween these values with the radius?
-				
+				repelstrength = repelBase-mag;// jw mod
+
 				if(repelstrength>0)
 				{
 					repelforce.divideEq(mag);
