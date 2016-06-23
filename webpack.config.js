@@ -12,7 +12,7 @@ module.exports = [
     }
 },
 {
-    entry: "./src/js/main/container.js",
+    entry: "./src/js/content/main.js",
     output: {
         path: './www/js',
         filename: "bundle.js"
@@ -20,7 +20,16 @@ module.exports = [
     module: {
         loaders: [
             { test: /\.css$/, loader: "style!css" },
+            {
+                test: /.jsx?$/,
+                loader: 'babel-loader',
+                exclude: /node_modules/,
+                query: {
+                    presets: ['es2015', 'react']
+                }
+            },
+
         ]
-    }  
+    }
 }
 ];

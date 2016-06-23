@@ -58,16 +58,16 @@
 		var preload = new createjs.LoadQueue();
 		preload.addEventListener("fileload", handleFileComplete);
 		preload.addEventListener("progress", handleProgress);
-		preload.loadFile("img/2016_03_14_Checkout_Flow_Vis_D-Desktop_RD5.png");// simulate content download
-		
-		// need to configure webpack to bundle a secondary js file for site assets above...
-		
+		//preload.loadFile("img/2016_03_14_Checkout_Flow_Vis_D-Desktop_RD5.png");// simulate content download
+		//preload.loadFile("js/bundle.js");
+		preload.loadManifest(["js/bundle.js", {id:"image", src:"img/2016_03_14_Checkout_Flow_Vis_D-Desktop_RD5.png"}]);
+
 	}
 
 	document.addEventListener('DOMContentLoaded', init);
 
 	function handleFileComplete(event) {
-		
+
 		TweenLite.to(canvas, 1.2, {
 	  		onUpdate: function(){
 		  		repelBase = 50+(this.ratio*500);
