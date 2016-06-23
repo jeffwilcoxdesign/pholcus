@@ -21,20 +21,21 @@ function init() {
 document.addEventListener('DOMContentLoaded', init);
 
 function handleFileComplete(event) {
-	// need to animate elements within particles array here
+	
+	TweenLite.to(canvas, 1.2, {
+  		onUpdate: function(){
+	  		repelBase = 50+(this.ratio*500);
+	  	},
+  		css:{opacity: 0.2},
+  		ease:Power1.easeInOut,
+  	});
+
 	particles.forEach(function(el){
-		
 		// enlarge the jelly dots!
-		TweenLite.to(el, 1.2, 
-	  	{
+		TweenLite.to(el, 1.2, {
 	  		radius: 50,
-	  		onUpdate: function(){
-	  			repelBase = 50+(this.ratio*500);
-	  			// consider having a radius var that is also tweened?
-	  		},
 	  		ease:Power1.easeInOut,
 	  	});
-
 	});
 
 }
