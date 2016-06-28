@@ -12,10 +12,7 @@ function init() {
 	var preload = new createjs.LoadQueue();
 	preload.addEventListener("fileload", handleFileComplete);
 	preload.addEventListener("progress", handleProgress);
-	//preload.loadFile("img/2016_03_14_Checkout_Flow_Vis_D-Desktop_RD5.png");// simulate content download
-	//preload.loadFile("js/bundle.js");
-	preload.loadManifest(["js/bundle.js", {id:"image", src:"img/2016_03_14_Checkout_Flow_Vis_D-Desktop_RD5.png"}]);
-
+	preload.loadManifest(["js/bundle.js", {id:"logo", src:"img/basis-logo.svg"}]);
 }
 
 document.addEventListener('DOMContentLoaded', init);
@@ -142,6 +139,6 @@ function makeParticle(particleCount) {
 			
 		// add it to the array
 		particles.push(particle);
-		loop();// jw edit
+		loop();
 	}
 }
