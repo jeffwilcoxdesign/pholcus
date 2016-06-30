@@ -185,7 +185,7 @@
 				
 			// add it to the array
 			particles.push(particle);
-			loop();// jw edit
+			loop();
 		}
 	}
 

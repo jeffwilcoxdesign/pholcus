@@ -14,7 +14,8 @@
     "history": "^1.17.x",
     "react": "^0.14.2",
     "react-dom": "^0.14.2",
-    "react-router": "^1.0.0-rc4"
+    "react-router": "^1.0.0-rc4",
+    "jquery"  : "^2.2"
   },
   "devDependencies": {
     "webpack": "^1.13.0",
